@@ -80,3 +80,4 @@ desktop.ini
 tmp/
 temp/
 *.tmp
+.claude/launch.json

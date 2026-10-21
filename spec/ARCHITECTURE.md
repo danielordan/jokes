@@ -249,3 +249,10 @@ Vercel (אותו Origin)
 11. [WebKit — Add to Home Screen through third-party browsers on iOS](https://webkit.org/blog/13878/web-push-for-web-apps-on-ios-and-ipados/)
 
 > **הערת עדכניות:** מגבלות תכניות, תמחור ומדיניות זמינות מודלים משתנים. לפני Deployment יש לאמת שהמודל `gpt-5` נגיש בחשבון, שהוא תומך בהגדרות ה-`reasoning` וה-`verbosity` שבסעיף 2.5, ושזמן ההרצה והתוכנית ב-Vercel מתאימים לשימוש המתוכנן. כל שינוי במודל שנדרש כתוצאה מ-Deprecation יחייב החלטת מוצר מפורשת.
+
+## החלטות מרכזיות (ADRs)
+
+### ADR-1: הרצה מקומית ב-Milestone 1 באמצעות Vite בלבד
+**הקשר:** סעיף 3.1 מגדיר Development מקומי ב-`vercel dev` לאחר `vercel link`. ב-Milestone 1 עדיין אין תיקיית `api/`, אין Function ואין משתני סביבה.
+**החלטה:** ב-Milestone 1 ההרצה המקומית היא `npm run dev` (Vite בלבד). המעבר ל-`vercel dev` ול-`vercel link` נעשה ב-Milestone 2, יחד עם הוספת `api/joke.ts`.
+**השלכות:** אין צורך ב-Vercel CLI או בחיבור לחשבון Vercel כדי להריץ את Milestone 1 מקומית. ב-Milestone 2 פקודת ההרצה ב-CLAUDE.md תעודכן.

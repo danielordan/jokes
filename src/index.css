@@ -1,0 +1,280 @@
+:root {
+  --blush: #f7aeb8;
+  --pale: #fbd6dc;
+  --cream: #fff4ed;
+  --charcoal: #2e2424;
+  --cocoa: #8b5e4d;
+  --white: #ffffff;
+  --raspberry: #c23a62;
+
+  --radius-field: 20px;
+  --radius-card: 24px;
+  --shadow-soft: 0 8px 24px rgba(194, 58, 98, 0.12);
+
+  font-family: 'Heebo', 'Assistant', sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
+  color: var(--charcoal);
+  -webkit-text-size-adjust: 100%;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  background: var(--cream);
+}
+
+h1,
+h2,
+p {
+  margin: 0;
+}
+
+/* Single mobile column; centered on wide screens. */
+.app {
+  max-width: 480px;
+  min-height: 100vh;
+  margin: 0 auto;
+  overflow-x: hidden;
+  background: linear-gradient(180deg, #fdeef0 0%, var(--cream) 60%);
+}
+
+/* ---------- Header ---------- */
+
+.hero {
+  position: relative;
+  padding: 32px 20px 0;
+  background: var(--blush);
+  border-radius: 0 0 50% 50% / 0 0 36px 36px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.title {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  font-size: 36px;
+  font-weight: 700;
+  line-height: 1.2;
+  color: var(--charcoal);
+}
+
+/* Keep the title on one line on very narrow phones. */
+@media (max-width: 359px) {
+  .title {
+    font-size: 30px;
+  }
+}
+
+.title-burst {
+  width: 22px;
+  height: 22px;
+  flex: none;
+  color: var(--raspberry);
+}
+
+/* Mirror the burst on the left so both point at the title. */
+.title-burst--mirror,
+.action-burst--mirror {
+  transform: scaleX(-1);
+}
+
+.kitten {
+  display: block;
+  width: 220px;
+  max-width: 70%;
+  height: auto;
+  margin: 12px auto 0;
+  position: relative;
+}
+
+.hero-heart {
+  position: absolute;
+  color: var(--white);
+  opacity: 0.75;
+}
+
+.hero-heart--1 { width: 30px; height: 30px; top: 110px; right: 30px; }
+.hero-heart--2 { width: 22px; height: 22px; top: 170px; right: 60px; }
+.hero-heart--3 { width: 34px; height: 34px; top: 120px; left: 34px; }
+.hero-heart--4 { width: 20px; height: 20px; top: 185px; left: 70px; }
+.hero-heart--5 { width: 16px; height: 16px; top: 80px; left: 90px; }
+
+/* ---------- Content ---------- */
+
+.content {
+  padding: 28px 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.topic-label {
+  font-size: 24px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 14px;
+}
+
+.input-wrap {
+  position: relative;
+}
+
+.topic-input {
+  width: 100%;
+  height: 56px;
+  padding: 0 18px 0 52px;
+  font: inherit;
+  font-size: 16px;
+  color: var(--charcoal);
+  text-align: right;
+  background: var(--white);
+  border: 1.5px solid var(--blush);
+  border-radius: var(--radius-field);
+  box-shadow: var(--shadow-soft);
+  outline: none;
+}
+
+.topic-input::placeholder {
+  color: #b39385;
+}
+
+.topic-input:focus {
+  border-color: var(--raspberry);
+}
+
+.input-paw {
+  position: absolute;
+  left: 18px;
+  top: 50%;
+  width: 24px;
+  height: 24px;
+  transform: translateY(-50%);
+  color: var(--blush);
+  pointer-events: none;
+}
+
+.counter {
+  margin-top: 6px;
+  font-size: 14px;
+  color: var(--cocoa);
+  text-align: right;
+}
+
+/* ---------- Button ---------- */
+
+.action {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.action-burst {
+  width: 18px;
+  height: 18px;
+  flex: none;
+  color: var(--raspberry);
+}
+
+.primary-button {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  min-height: 60px;
+  padding: 0 24px;
+  font: inherit;
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--white);
+  background: var(--raspberry);
+  border: none;
+  border-radius: 999px;
+  box-shadow: 0 10px 24px rgba(194, 58, 98, 0.3);
+  cursor: pointer;
+}
+
+.primary-button:disabled {
+  opacity: 0.55;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.button-sparkles {
+  width: 24px;
+  height: 24px;
+}
+
+/* ---------- Status line ---------- */
+
+.status {
+  min-height: 1.5em;
+  margin: -8px 0;
+  font-size: 16px;
+  text-align: center;
+  color: var(--cocoa);
+}
+
+/* ---------- Joke card ---------- */
+
+.joke-card {
+  position: relative;
+  min-height: 220px;
+  padding: 32px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--pale);
+  border-radius: var(--radius-card);
+  box-shadow: var(--shadow-soft);
+  overflow: hidden;
+}
+
+.joke-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  text-align: center;
+}
+
+.joke-smiley {
+  width: 120px;
+  height: 80px;
+  color: var(--raspberry);
+}
+
+.joke-empty-text {
+  max-width: 220px;
+  font-size: 20px;
+  line-height: 1.4;
+  color: var(--cocoa);
+}
+
+/* Joke text (used from Milestone 2): direction follows content, long text wraps. */
+.joke-text {
+  width: 100%;
+  font-size: 18px;
+  white-space: pre-wrap;
+  overflow-wrap: anywhere;
+  text-align: start;
+}
+
+.card-heart {
+  position: absolute;
+  color: var(--blush);
+  opacity: 0.8;
+}
+
+.card-heart--1 { width: 26px; height: 26px; top: 40%; right: 22px; }
+.card-heart--2 { width: 22px; height: 22px; top: 22px; left: 40px; }
+.card-heart--3 { width: 20px; height: 20px; bottom: 36px; left: 28px; }
