@@ -1,10 +1,40 @@
 import { useState } from 'react'
+import { requestJoke, type JokeError } from './api'
 import kitten from './assets/kitten.svg'
 import { Burst, Heart, Paw, Smiley, Sparkles } from './decorations'
 import { TEXTS, TOPIC_MAX_LENGTH } from './texts'
 
+type Status = 'idle' | 'loading' | 'success' | 'error'
+
+// Basic status messages; the full state styling comes in Milestone 3.
+const ERROR_TEXT: Record<JokeError, string> = {
+  INVALID_TOPIC: TEXTS.errorGeneral,
+  GENERATION_FAILED: TEXTS.errorGeneral,
+  TOPIC_NOT_ALLOWED: TEXTS.errorNotAllowed,
+  NETWORK: TEXTS.offline,
+}
+
 export default function App() {
   const [topic, setTopic] = useState('')
+  const [joke, setJoke] = useState<string | null>(null)
+  const [status, setStatus] = useState<Status>('idle')
+  const [errorMessage, setErrorMessage] = useState<string | null>(null)
+
+  async function handleCreate() {
+    setStatus('loading')
+    setErrorMessage(null)
+    const result = await requestJoke(topic)
+    if (result.ok) {
+      setJoke(result.joke)
+      setStatus('success')
+    } else {
+      // Keep the topic and the previous joke on failure.
+      setErrorMessage(ERROR_TEXT[result.error])
+      setStatus('error')
+    }
+  }
+
+  const statusText = status === 'loading' ? TEXTS.loading : errorMessage
 
   return (
     <div className="app">
@@ -48,24 +78,36 @@ export default function App() {
 
         <div className="action">
           <Burst className="action-burst" />
-          {/* Disabled until the AI service is connected (Milestone 2). */}
-          <button type="button" className="primary-button" disabled>
+          <button
+            type="button"
+            className="primary-button"
+            disabled={status === 'loading'}
+            onClick={handleCreate}
+          >
             <Sparkles className="button-sparkles" />
             <span>{TEXTS.button}</span>
           </button>
           <Burst className="action-burst action-burst--mirror" />
         </div>
 
-        <p className="status" role="status" aria-live="polite"></p>
+        <p className="status" role="status" aria-live="polite">
+          {statusText}
+        </p>
 
         <section className="joke-card">
           <Heart className="card-heart card-heart--1" />
           <Heart className="card-heart card-heart--2" />
           <Heart className="card-heart card-heart--3" />
-          <div className="joke-empty">
-            <Smiley className="joke-smiley" />
-            <p className="joke-empty-text">{TEXTS.emptyCard}</p>
-          </div>
+          {joke ? (
+            <p className="joke-text" dir="auto">
+              {joke}
+            </p>
+          ) : (
+            <div className="joke-empty">
+              <Smiley className="joke-smiley" />
+              <p className="joke-empty-text">{TEXTS.emptyCard}</p>
+            </div>
+          )}
         </section>
       </main>
     </div>

@@ -262,6 +262,8 @@ p {
 
 /* Joke text (used from Milestone 2): direction follows content, long text wraps. */
 .joke-text {
+  position: relative;
+  z-index: 1;
   width: 100%;
   font-size: 18px;
   white-space: pre-wrap;

@@ -256,3 +256,8 @@ Vercel (אותו Origin)
 **הקשר:** סעיף 3.1 מגדיר Development מקומי ב-`vercel dev` לאחר `vercel link`. ב-Milestone 1 עדיין אין תיקיית `api/`, אין Function ואין משתני סביבה.
 **החלטה:** ב-Milestone 1 ההרצה המקומית היא `npm run dev` (Vite בלבד). המעבר ל-`vercel dev` ול-`vercel link` נעשה ב-Milestone 2, יחד עם הוספת `api/joke.ts`.
 **השלכות:** אין צורך ב-Vercel CLI או בחיבור לחשבון Vercel כדי להריץ את Milestone 1 מקומית. ב-Milestone 2 פקודת ההרצה ב-CLAUDE.md תעודכן.
+
+### ADR-2: הרצה מקומית ב-`vercel dev` ופורמט ה-Function
+**הקשר:** ADR-1 דחה את `vercel dev` ל-Milestone 2. עכשיו קיים `api/joke.ts`, שדורש סביבת Vercel מקומית ומפתח OpenAI. Vercel CLI מסרב להריץ `vercel dev` אם סקריפט `dev` ב-`package.json` מפעיל אותו (הפעלה רקורסיבית), וב-`vercel dev` המפתח מ-`.env` לא הגיע ל-Function.
+**החלטה:** `npm run dev` נשאר Vite בלבד (וכך Vercel משתמש בו כפקודת הפיתוח של הממשק). `npm run dev:full` טוען את `.env` לסביבת התהליך ומריץ `vercel dev` (Vercel CLI כ-devDependency). ה-Function כתובה בפורמט Web standard (`export function POST(request: Request)`, ו-`405` מפורש לשאר השיטות), `maxDuration: 30` מוגדר ב-`vercel.json`, ול-OpenAI SDK מוגדר `timeout: 20000` ו-`maxRetries: 0` (ברירת המחדל של ה-SDK היא 2 ניסיונות חוזרים, שהיו עלולים לגרום לחיוב כפול).
+**השלכות:** הרצה מקומית מלאה דורשת `vercel login` + `vercel link` חד-פעמיים ומפתח ב-`.env`. `vercel link` יוצר `.env.local` (מוחרג מ-Git). בלי מפתח, הממשק עולה והבקשה מחזירה `503 GENERATION_FAILED`.

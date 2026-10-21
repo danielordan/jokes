@@ -57,5 +57,5 @@
 
 ## פקודות הרצה
 > Claude ממלא זאת ברגע שהאפליקציה יכולה לרוץ (בדרך כלל בסיום Milestone 1), ומעדכן אם משהו משתנה.
-- **הרצה (dev):** `npm run dev` (Node.js מותקן ב-`~/.local/node/bin`)
+- **הרצה (dev):** `npm run dev:full` — האפליקציה וה-API יחד (`vercel dev`, טוען את `.env`); `npm run dev` — ממשק בלבד (Vite). Node.js מותקן ב-`~/.local/node/bin`.
 - **בדיקות (test):** אין (בדיקת TypeScript ו-Build: `npm run build`)
