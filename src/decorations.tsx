@@ -63,3 +63,16 @@ export function Burst({ className }: IconProps) {
     </svg>
   )
 }
+
+export function Warning({ className }: IconProps) {
+  return (
+    <svg className={className} viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        d="M10.3 3.9a2 2 0 0 1 3.4 0l8 13.6A2 2 0 0 1 20 20.5H4a2 2 0 0 1-1.7-3L10.3 3.9z"
+        fill="currentColor"
+      />
+      <rect x="11" y="8.5" width="2" height="6" rx="1" fill="#fff" />
+      <circle cx="12" cy="17.2" r="1.2" fill="#fff" />
+    </svg>
+  )
+}

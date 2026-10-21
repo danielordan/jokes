@@ -1,17 +1,18 @@
 import { useState } from 'react'
 import { requestJoke, type JokeError } from './api'
 import kitten from './assets/kitten.svg'
-import { Burst, Heart, Paw, Smiley, Sparkles } from './decorations'
+import { Burst, Heart, Paw, Smiley, Sparkles, Warning } from './decorations'
 import { TEXTS, TOPIC_MAX_LENGTH } from './texts'
 
-type Status = 'idle' | 'loading' | 'success' | 'error'
+type Status = 'idle' | 'loading' | 'success' | 'error' | 'offline'
 
-// Basic status messages; the full state styling comes in Milestone 3.
+// Status line text per failure (DESIGN 1.3 / 1.4).
 const ERROR_TEXT: Record<JokeError, string> = {
   INVALID_TOPIC: TEXTS.errorGeneral,
   GENERATION_FAILED: TEXTS.errorGeneral,
+  TIMEOUT: TEXTS.errorGeneral,
   TOPIC_NOT_ALLOWED: TEXTS.errorNotAllowed,
-  NETWORK: TEXTS.offline,
+  OFFLINE: TEXTS.offline,
 }
 
 export default function App() {
@@ -21,6 +22,7 @@ export default function App() {
   const [errorMessage, setErrorMessage] = useState<string | null>(null)
 
   async function handleCreate() {
+    if (status === 'loading') return
     setStatus('loading')
     setErrorMessage(null)
     const result = await requestJoke(topic)
@@ -30,7 +32,7 @@ export default function App() {
     } else {
       // Keep the topic and the previous joke on failure.
       setErrorMessage(ERROR_TEXT[result.error])
-      setStatus('error')
+      setStatus(result.error === 'OFFLINE' ? 'offline' : 'error')
     }
   }
 
@@ -90,11 +92,12 @@ export default function App() {
           <Burst className="action-burst action-burst--mirror" />
         </div>
 
-        <p className="status" role="status" aria-live="polite">
+        <p className={`status status--${status}`} role="status" aria-live="polite">
+          {status === 'error' && <Warning className="status-icon" />}
           {statusText}
         </p>
 
-        <section className="joke-card">
+        <section className={status === 'loading' ? 'joke-card is-loading' : 'joke-card'}>
           <Heart className="card-heart card-heart--1" />
           <Heart className="card-heart card-heart--2" />
           <Heart className="card-heart card-heart--3" />

@@ -224,6 +224,20 @@ p {
   color: var(--cocoa);
 }
 
+.status--error,
+.status--offline {
+  color: var(--raspberry);
+}
+
+/* Inline so it stays next to the first word when the message wraps. */
+.status-icon {
+  display: inline-block;
+  width: 18px;
+  height: 18px;
+  margin-inline-end: 6px;
+  vertical-align: -3px;
+}
+
 /* ---------- Joke card ---------- */
 
 .joke-card {
@@ -237,6 +251,12 @@ p {
   border-radius: var(--radius-card);
   box-shadow: var(--shadow-soft);
   overflow: hidden;
+  transition: opacity 0.2s;
+}
+
+/* Previous content stays visible but faded while a new joke is loading. */
+.joke-card.is-loading {
+  opacity: 0.5;
 }
 
 .joke-empty {
